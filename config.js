@@ -8,7 +8,7 @@ module.exports = {
     mysqlConfig: {
         host: 'localhost',
         user: 'root',
-        password: 'a215509ppn',
+        password: 'root',
         database: 'nazik_danilova_laba',
     }
 };

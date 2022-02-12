@@ -36,9 +36,9 @@ create table items
 );
 
 insert into categories (id, title)
-values  (1, 'Pre-office'),
-        (2, 'Middle-office'),
-        (3, 'Upper-office');
+values  (1, 'Furniture'),
+        (2, 'Computer equipment'),
+        (3, 'Appliances');
 
 
 insert into places (id, title, description)

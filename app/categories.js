@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../mySqlDb');
 
-
 router.get('/', async (req, res, next) => {
     try {
-        let [categories] = await db.getConnection().execute('SELECT * FROM categories');
+        let [categories] = await db.getConnection().execute('SELECT id, title FROM categories');
         res.send({categories: categories});
     } catch (e) {
         next(e);
@@ -16,17 +15,16 @@ router.get('/:id', async (req, res, next) => {
     try {
         const [categories] = await db.getConnection().execute('SELECT * FROM categories WHERE id = ?', [req.params.id]);
         const category = categories[0];
-
         if (!category) {
             return res.status(404).send({error: `Category with id=${req.params.id} doesn't exist`});
         }
-        return  res.send({category: category});
+        return res.send({category: category});
     } catch (e) {
         next(e);
     }
 });
 
-router.post('/' , async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         if (!req.body.title) {
             return res.status(400).send({message: 'Title is required'});
@@ -52,10 +50,14 @@ router.post('/' , async (req, res, next) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
-    const categoryId = req.params.id;
-    await db.getConnection().execute(`DELETE FROM categories WHERE id = ${categoryId}`);
-    res.send(`category was deleted`);
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const categoryId = req.params.id;
+        await db.getConnection().execute(`DELETE FROM categories WHERE id = ${categoryId}`);
+        res.send(`category was deleted`);
+    } catch (e) {
+        next(e);
+    }
 });
 
 module.exports = router;

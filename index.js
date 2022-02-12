@@ -7,7 +7,7 @@ const items = require('./app/items');
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cors({origin: 'http://localhost:4200'}));
 app.use(express.json());
 app.use('/categories', categories);
 app.use('/places', places);
